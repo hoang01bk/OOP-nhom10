@@ -1,9 +1,7 @@
-package DFS_BFS;
+package nhom10;
 
 import java.util.ArrayList;
 import java.util.Stack;
-//them
-//java.util.concurrent.TimeUnit;
 
 public class Graph {
 
@@ -61,15 +59,12 @@ public class Graph {
 					if (!visit[j]) {
 						visit[j] = true;
 						back[j] = i;
-						//GUI.setPath();
 						queue.add(0, j);
 					}
 				}
 			}
 		}
 	}
-	//
-	
 
 	// --------- init value --------- //
 	public void initValue() {

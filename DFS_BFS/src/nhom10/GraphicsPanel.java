@@ -1,4 +1,4 @@
-package DFS_BFS;
+package nhom10;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
-
 
 public class GraphicsPanel extends JPanel {
 
@@ -61,13 +60,9 @@ public class GraphicsPanel extends JPanel {
 
 		for (int i = 0; i < listLine.size(); i++) {
 			listLine.get(i).draw(g2);
-			//them
-			
 		}
 		for (int i = 0; i < listPoint.size(); i++) {
 			listPoint.get(i).draw(g2);
-			//them
-			
 		}
 
 	}
@@ -96,12 +91,9 @@ public class GraphicsPanel extends JPanel {
 	}
 
 	public ArrayList<MyLine> getListLine() {
-		//them
-		
-
-		//them
 		return listLine;
 	}
+
 	public void setListLine(ArrayList<MyLine> listLine) {
 		this.listLine = listLine;
 	}

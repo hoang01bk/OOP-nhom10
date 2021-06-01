@@ -1,10 +1,9 @@
-package DFS_BFS;
+package nhom10;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
-
 
 public class MyLine {
 

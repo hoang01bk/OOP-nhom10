@@ -1,6 +1,5 @@
-package DFS_BFS;
-//them
-//java.util.concurrent.TimeUnit;
+package nhom10;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -26,8 +23,8 @@ import javax.swing.border.TitledBorder;
 
 public class GUI extends JFrame implements ActionListener {
 
-	private final String title = "Chương trình duyệt đồ thị";
-	private final String author = "Nhóm 7";
+	private final String title = "Chương trình mô phỏng thuật toán BFS - DFS";
+	private final String author = "Nhóm 10";
 	private final int colTextField = 5;
 	private int widthGraphicsPanl = 400;
 	private int heightGraphicsPanl = 0;
@@ -76,12 +73,12 @@ public class GUI extends JFrame implements ActionListener {
 
 		// create select panel - select algorithm
 		JPanel selectPanel = new JPanel(new GridLayout(4, 2, 5, 5));
-		selectPanel.setBorder(new TitledBorder("Khởi tạo"));
+		selectPanel.setBorder(new TitledBorder("Thuật toán"));
 		selectPanel.add(new JLabel("Thuật toán:"));
 		selectPanel.add(radBFS = createRadioButton("BFS", true));
 		selectPanel.add(new JLabel(""));
 		selectPanel.add(radDFS = createRadioButton("DFS", false));
-		selectPanel.add(new JLabel("Số điểm:"));
+		selectPanel.add(new JLabel("Số đỉnh:"));
 		selectPanel.add(tfNumberPoint = createTextField());
 		selectPanel.add(new JLabel(""));
 		selectPanel.add(btnCreateGraph = createButton("Nhập"));
@@ -92,18 +89,18 @@ public class GUI extends JFrame implements ActionListener {
 
 		// create edge panel - select algorithm
 		JPanel edgePanel = new JPanel(new GridLayout(3, 2, 5, 5));
-		edgePanel.setBorder(new TitledBorder("Thêm cạnh"));
-		edgePanel.add(new JLabel("Điểm đầu:"));
+		edgePanel.setBorder(new TitledBorder("Nhập các cung"));
+		edgePanel.add(new JLabel("Đỉnh đầu:"));
 		edgePanel.add(tfBeginPoint = createTextField());
-		edgePanel.add(new JLabel("Điểm cuối"));
+		edgePanel.add(new JLabel("Đỉnh cuối"));
 		edgePanel.add(tfEndPoint = createTextField());
 		edgePanel.add(new JLabel(""));
-		edgePanel.add(btnAddEdge = createButton("Thêm"));
+		edgePanel.add(btnAddEdge = createButton("Nhập"));
 
 		// create edge panel - select algorithm
 		JPanel runPanel = new JPanel(new GridLayout(2, 2, 5, 5));
-		runPanel.setBorder(new TitledBorder("Duyệt đồ thị"));
-		runPanel.add(new JLabel("Điểm bắt đầu:"));
+		runPanel.setBorder(new TitledBorder("Duyệt"));
+		runPanel.add(new JLabel("Đỉnh bắt đầu:"));
 		runPanel.add(tfStartPoint = createTextField());
 		runPanel.add(new JLabel(""));
 		runPanel.add(btnRun = createButton("Duyệt"));
@@ -112,11 +109,9 @@ public class GUI extends JFrame implements ActionListener {
 		contentPanel.add(selectPanel, BorderLayout.PAGE_START);
 		contentPanel.add(edgePanel, BorderLayout.CENTER);
 		contentPanel.add(runPanel, BorderLayout.PAGE_END);
-		// contentPanel.setBorder(new LineBorder(Color.blue));
 
 		JPanel panel = new JPanel();
 		panel.add(contentPanel);
-		// panel.setBorder(new LineBorder(Color.red));
 		heightGraphicsPanl = (int) contentPanel.getPreferredSize().getHeight();
 		return panel;
 	}
@@ -124,7 +119,6 @@ public class GUI extends JFrame implements ActionListener {
 	private JPanel createShowPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		// panel.add(new JLabel("Đồ thị"), BorderLayout.PAGE_START);
 		panel.add(graphicsPanel = new GraphicsPanel());
 		return panel;
 	}
@@ -179,7 +173,6 @@ public class GUI extends JFrame implements ActionListener {
 			graph = new Graph();
 			graph.setNumberPoint(numberPoint);
 			graph.initValue();
-			// disabale(true);
 			tfBeginPoint.requestFocus();
 		}
 
@@ -215,8 +208,7 @@ public class GUI extends JFrame implements ActionListener {
 			} else {
 				graph.DFS(startPoint);
 			}
-			//setPath();
-			runWithTimer();
+			setPath();
 		}
 	}
 
@@ -235,64 +227,6 @@ public class GUI extends JFrame implements ActionListener {
 		return value;
 	}
 
-private void runWithTimer() {
-		
-		int numberLine = graphicsPanel.getListLine().size();
-		for (int i = 0; i < numberLine; i++) {
-			graphicsPanel.getListLine().get(i).setType(0);
-			graphicsPanel.getListLine().get(i).setOrder(0);
-		}
-
-		int numberPoint = graphicsPanel.getListPoint().size();
-		for (int i = 0; i < numberPoint; i++) {
-			graphicsPanel.getListPoint().get(i).setType(0);
-		}
-
-		graphicsPanel.repaint();
-		int numberPointVisit = graph.getListVisit().size();
-	    Timer timer = new Timer(1, new ActionListener() {
-		    int counter = 0;
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-				int index = graph.getListVisit().get(counter);
-				if (counter == 0) {
-					graphicsPanel.getListPoint().get(index).setType(1);
-				} else if (counter == numberPointVisit - 1) {
-					graphicsPanel.getListPoint().get(index).setType(3);
-				} else {
-					graphicsPanel.getListPoint().get(index).setType(2);
-				}
-				boolean isFinish = false;
-				for (int j = 0; j < numberLine; j++) {
-					MyLine line = graphicsPanel.getListLine().get(j);
-					if ((line.getIndexP1() == index && line.getIndexP2() == graph
-							.getBack()[index])
-							|| (line.getIndexP1() == graph.getBack()[index] && line
-									.getIndexP2() == index)) {
-						graphicsPanel.getListLine().get(j).setType(1);
-						graphicsPanel.getListLine().get(j).setOrder(counter);
-						System.out.println("draw line");
-						graphicsPanel.invalidate();
-						isFinish = true;
-						break;
-					}
-					if (isFinish) {
-						break;
-					}
-				}
-				graphicsPanel.repaint();
-	            counter++;
-	            if (counter == numberPointVisit) {
-	                ((Timer)e.getSource()).stop();
-	            }
-	        }
-	    });
-	    timer.setDelay(1000);
-	    timer.setRepeats(true);
-	    timer.start();
-	}
-
-	
 	private void setPath() {
 		int numberPointVisit = graph.getListVisit().size();
 		graph.showMatrix();
@@ -301,18 +235,12 @@ private void runWithTimer() {
 		int numberLine = graphicsPanel.getListLine().size();
 		for (int i = 0; i < numberLine; i++) {
 			graphicsPanel.getListLine().get(i).setType(0);
-			//them
-			
-			//them
 			graphicsPanel.getListLine().get(i).setOrder(0);
 		}
 
 		int numberPoint = graphicsPanel.getListPoint().size();
 		for (int i = 0; i < numberPoint; i++) {
 			graphicsPanel.getListPoint().get(i).setType(0);
-			//them
-			
-			//them
 		}
 
 		for (int i = 0; i < numberPointVisit; i++) {
@@ -324,9 +252,6 @@ private void runWithTimer() {
 			} else {
 				graphicsPanel.getListPoint().get(index).setType(2);
 			}
-			//them
-			
-			//them
 		}
 
 		for (int i = 0; i < numberPointVisit; i++) {
@@ -339,21 +264,10 @@ private void runWithTimer() {
 						|| (line.getIndexP1() == graph.getBack()[index] && line
 								.getIndexP2() == index)) {
 					line.setType(1);
-					//them
-					
-					//them
 					line.setOrder(i);
 					break;
 				}
-				//them
-				
-
-				//them
 			}
-			//them
-			
-
-			//them
 		}
 		graphicsPanel.repaint();
 	}

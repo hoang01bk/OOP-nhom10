@@ -1,4 +1,4 @@
-package DFS_BFS;
+package nhom10;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
